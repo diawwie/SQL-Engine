@@ -43,22 +43,22 @@ private:
 
 public:
     CommandProcessor(string comm) {
-        command_array = commandTokenizer(comm);
+        this->command_array = commandTokenizer(comm);
     }
 
     void printTokens() {
         cout << "Command tokens:" << endl;
-        for (int i = 0; i < 20 && !command_array[i].empty(); i++) {
-            cout << i << ": " << command_array[i] << endl;
+        for (int i = 0; i < 20 && !this->command_array[i].empty(); i++) {
+            cout << i << ": " << this->command_array[i] << endl;
         }
     }
 
     string* getCommandArray() {
-        return command_array;
+        return this->command_array;
     }
 
     ~CommandProcessor() {
-        delete[] command_array;
+        delete[] this->command_array;
     }
 };
 
