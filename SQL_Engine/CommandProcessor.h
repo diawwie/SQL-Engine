@@ -43,7 +43,7 @@ private:
 
 public:
     CommandProcessor(string comm) {
-        this->command_array = commandTokenizer(comm);
+        this->command_array = this->commandTokenizer(comm);
     }
 
     void printTokens() {

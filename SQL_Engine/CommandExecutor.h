@@ -112,7 +112,7 @@ class CommandExecutor{
 
 	public:
 		CommandExecutor(string* comm_arr) {
-            executeCommand(comm_arr);
+            this->executeCommand(comm_arr);
 		}
 
         ~CommandExecutor() {
