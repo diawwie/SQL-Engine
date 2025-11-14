@@ -10,8 +10,9 @@ using namespace std;
 
 class CommandProcessor {
 private:
-    string* command_array = new string[20];
+    string* commandArray = nullptr;
     string comm = "";
+    int nrArgs = 0;
 
     string trim(const string& s) {
         return regex_replace(s, regex("^\\s+|\\s+$"), "");
@@ -26,39 +27,48 @@ private:
 
     string* commandTokenizer(string s) {
         s = trim(upperize(s));
-        int arg_num = 0;
-        string* comm_arr = new string[20];
+        int argNum = 0;
+        string* commArr = new string[20];
 
         for (int i = 0; i < s.length(); i++) {
             if (s[i] == ' ') {
-                comm_arr[arg_num] = s.substr(0, i);
+                commArr[argNum] = s.substr(0, i);
                 s.erase(0, i + 1);
                 i = 0;
-                arg_num++;
+                argNum++;
             }
         }
-        comm_arr[arg_num] = s;
-        return comm_arr;
+        commArr[argNum] = s;
+        this->nrArgs = argNum+1;
+
+        return commArr;
     }
 
 public:
     CommandProcessor(string comm) {
-        this->command_array = this->commandTokenizer(comm);
+        this->commandArray = new string[comm.length()+1];
+        this->commandArray = this->commandTokenizer(comm);
     }
 
     void printTokens() {
         cout << "Command tokens:" << endl;
-        for (int i = 0; i < 20 && !this->command_array[i].empty(); i++) {
-            cout << i << ": " << this->command_array[i] << endl;
+        for (int i = 0; i < this->nrArgs && !this->commandArray[i].empty(); i++) {
+            cout << i << ": " << this->commandArray[i] << endl;
         }
     }
 
     string* getCommandArray() {
-        return this->command_array;
+        string* copyCommand = new string[this->nrArgs];
+        for (int i = 0; i < this->nrArgs; i++) {
+            copyCommand[i] = this->commandArray[i];
+        }
+
+        return copyCommand;
     }
 
     ~CommandProcessor() {
-        delete[] this->command_array;
+        delete[] this->commandArray;
+        this->commandArray = nullptr;
     }
 };
 

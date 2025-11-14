@@ -8,7 +8,7 @@
 #include <cstring>
 using namespace std;
 
-enum CommandType {
+enum class CommandType {
     CREATE_TABLE,
     CREATE_INDEX,
     DROP_TABLE,
@@ -24,7 +24,7 @@ enum CommandType {
 
 class CommandExecutor{
     private:
-        CommandType identifyCommand(string* cmds) {
+        static CommandType identifyCommand(string* cmds) {
             if (cmds[0] == "CREATE") {
                 if (cmds[1] == "TABLE") {
                     return CommandType::CREATE_TABLE;
@@ -69,9 +69,9 @@ class CommandExecutor{
             }
             return CommandType::UNKNOWN;
         }
-
-        void executeCommand(string* cmds) {
-            CommandType type = identifyCommand(cmds);
+    public:
+        static void executeCommand(string* cmds) {
+            CommandType type = CommandExecutor::identifyCommand(cmds);
 
             switch (type) {
                 case CommandType::CREATE_TABLE:
@@ -108,15 +108,6 @@ class CommandExecutor{
                     cout << "Error!!";
                     break;
             }
-        }
-
-	public:
-		CommandExecutor(string* comm_arr) {
-            this->executeCommand(comm_arr);
-		}
-
-        ~CommandExecutor() {
-
         }
 };
 
